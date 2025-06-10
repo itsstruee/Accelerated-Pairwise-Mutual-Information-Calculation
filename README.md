@@ -1,7 +1,11 @@
 # Accelerated-Pairwise-Mutual-Information-Calculation
 The primary goal of this script is to calculate the pairwise mutual information for every possible combination of columns in a given dataset, transforming a process that could take hours into one that completes in minutes or seconds.
-Mutual information measures the dependency between two variables; a higher value indicates a stronger relationship. This is a common task in feature selection and exploratory data analysis. The script's key feature is its performance. By using a custom Numba CUDA kernel, it parallelizes the entire computation on the GPU.
-. Dependencies
+
+
+1. Mutual information measures the dependency between two variables; a higher value indicates a stronger relationship. This is a common task in feature selection and exploratory data analysis. The script's key feature is its performance. By using a custom Numba CUDA kernel, it parallelizes the entire computation on the GPU.
+
+
+2. Dependencies
 The script relies on the RAPIDS AI ecosystem and Numba. Ensure the following libraries are installed in your CUDA-enabled environment:
 
 cudf: A Pandas-like GPU DataFrame library.
