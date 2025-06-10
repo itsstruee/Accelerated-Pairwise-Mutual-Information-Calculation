@@ -1,11 +1,9 @@
 # Accelerated-Pairwise-Mutual-Information-Calculation
 The primary goal of this script is to calculate the pairwise mutual information for every possible combination of columns in a given dataset, transforming a process that could take hours into one that completes in minutes or seconds.
 
+Mutual information measures the dependency between two variables; a higher value indicates a stronger relationship. This is a common task in feature selection and exploratory data analysis. The script's key feature is its performance. By using a custom Numba CUDA kernel, it parallelizes the entire computation on the GPU.
 
-1. Mutual information measures the dependency between two variables; a higher value indicates a stronger relationship. This is a common task in feature selection and exploratory data analysis. The script's key feature is its performance. By using a custom Numba CUDA kernel, it parallelizes the entire computation on the GPU.
-
-
-2. Dependencies
+Dependencies
 The script relies on the RAPIDS AI ecosystem and Numba. Ensure the following libraries are installed in your CUDA-enabled environment:
 
 cudf: A Pandas-like GPU DataFrame library.
@@ -16,7 +14,8 @@ numba: A just-in-time compiler that translates Python functions to optimized mac
 
 tqdm: A utility for displaying progress bars.
 
-3. Workflow Breakdown
+
+Workflow Breakdown
 The script operates in four main stages:
 
 Step 1: Data Loading & Discretization
@@ -60,7 +59,8 @@ Computes the MI score using the formula: sum(p(x,y) * log( p(x,y) / (p(x) * p(y)
 
 Symmetric Write: The final MI score is written to both mi_matrix[i, j] and mi_matrix[j, i], filling the final matrix symmetrically.
 
-Step 3: Kernel Launch
+
+Kernel Launch
 This section configures and launches the pairwise_mi_kernel.
 
 Result Matrix: A cupy array (mi_matrix_gpu) is initialized with zeros to store the results.
@@ -84,7 +84,7 @@ The diagonal of the matrix is filled with 1.0, as the mutual information of a va
 
 The final DataFrame is converted to Pandas and saved to a CSV file.
 
-4. How to Run the Script
+How to Run the Script
 Setup: Make sure you have a working RAPIDS environment with all the necessary dependencies installed.
 
 Data: Place your merged_quarterly_data.csv file in the same directory as the script, or update the file path in the script.
@@ -95,7 +95,7 @@ python pairwise_mi_accelerated.py
 
 Output: The script will print its progress and save the final results to pairwise_mi_matrix_accelerated.csv.
 
-5. Performance Gains Explained
+Performance Gains Explained
 The original script was slow because its nested Python for loops launched a separate GPU computation for each pair of columns. For 2791 columns, this means launching ~3.9 million individual cuml.metrics.mutual_info_score calls. The overhead of launching millions of kernels far outweighs the computation time of each one.
 
 The Numba version achieves its speedup by:
