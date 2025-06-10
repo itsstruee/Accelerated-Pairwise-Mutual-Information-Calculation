@@ -1,6 +1,18 @@
 # Accelerated-Pairwise-Mutual-Information-Calculation
 The primary goal of this script is to calculate the pairwise mutual information for every possible combination of columns in a given dataset, transforming a process that could take hours into one that completes in minutes or seconds.
 
+Before: Discretizing columns: 100%|██████████| 2791/2791 [00:16<00:00, 173.45it/s]
+        Computing MI:   3%|▎         | 70/2791 [16:21<10:23:38, 13.75s/it]
+
+After: Loading and discretizing data...
+        Discretizing columns: 100%|██████████| 2791/2791 [00:16<00:00, 174.13it/s]
+        Computing MI matrix on GPU with Numba...
+        MI computation finished in: 1.84 seconds
+        Saving results to CSV...
+        Done.
+
+How much Faster? about 20,000x faster.
+
 Mutual information measures the dependency between two variables; a higher value indicates a stronger relationship. This is a common task in feature selection and exploratory data analysis. The script's key feature is its performance. By using a custom Numba CUDA kernel, it parallelizes the entire computation on the GPU.
 
 Dependencies
